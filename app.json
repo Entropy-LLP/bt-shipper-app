@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "BharatTruck",
+    "slug": "bt-shipper-app",
+    "version": "1.0.0",
+    "scheme": "bharattruck",
+    "platforms": ["ios", "android"],
+    "icon": "./assets/icon.png",
+    "splash": { "resizeMode": "contain", "backgroundColor": "#f97316" },
+    "ios": { "supportsTablet": false, "bundleIdentifier": "com.bharattruck.shipper" },
+    "android": { "adaptiveIcon": { "backgroundColor": "#f97316" }, "package": "com.bharattruck.shipper" },
+    "plugins": ["expo-router"]
+  }
+}
