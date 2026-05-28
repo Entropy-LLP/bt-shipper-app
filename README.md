@@ -1,139 +1,36 @@
-# bt-shipper-app
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-The shipper-facing mobile app for BharatTruck. Built with Expo 51 and React Native, it lets freight customers log in, book trucks, track live shipments, and view booking history.
+## Getting Started
 
-**Platform:** iOS · Android (React Native / Expo 51)  
-**Stack:** Expo · React Native · TypeScript · Expo Router · Zustand · Axios
-
----
-
-## Quickstart
+First, run the development server:
 
 ```bash
-cp .env.example .env
-npm install
-npm run start               # Expo dev server — scan QR with Expo Go
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-Or from the repo root:
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-./bt start shipper
-```
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-Expo will print a QR code. Scan it with the **Expo Go** app on a physical device, or press `i` / `a` to open in iOS Simulator / Android Emulator.
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
----
+## Learn More
 
-## Environment Variables
+To learn more about Next.js, take a look at the following resources:
 
-Copy `.env.example` and set the backend URLs:
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-```bash
-EXPO_PUBLIC_AUTH_URL=http://localhost:3001
-EXPO_PUBLIC_BOOKING_URL=http://localhost:3002
-EXPO_PUBLIC_PRICING_URL=http://localhost:3003
-EXPO_PUBLIC_PAYMENT_URL=http://localhost:3004
-```
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-For a physical device on the same Wi-Fi, replace `localhost` with your machine's local IP (e.g. `192.168.1.42`).
+## Deploy on Vercel
 
-> All env vars must be prefixed `EXPO_PUBLIC_` to be accessible in the app bundle.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
----
-
-## NPM Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run start` | Start Expo dev server |
-| `npm run android` | Open on Android device/emulator |
-| `npm run ios` | Open on iOS Simulator |
-| `npm run build:web` | Export as a web app |
-
----
-
-## Screens
-
-### Auth flow (`app/(auth)/`)
-
-| Screen | File | Description |
-|--------|------|-------------|
-| Phone entry | `phone.tsx` | Enter Indian mobile number |
-| OTP verification | `otp.tsx` | 6-digit OTP input |
-| Email capture | `email.tsx` | Optional email for invoice delivery |
-| Tier info | `tier-info.tsx` | Explains shipper KYC tiers |
-
-### Main tabs (`app/(tabs)/`)
-
-| Tab | File | Description |
-|-----|------|-------------|
-| Home | `index.tsx` | Dashboard — quick book + active shipment summary |
-| Bookings | `bookings.tsx` | Active / past booking list with status badges |
-| Track | *(planned)* | Live map with driver location |
-| Profile | *(planned)* | Account, KYC status, payment methods |
-
----
-
-## Project Structure
-
-```
-bt-shipper-app/
-├── app/
-│   ├── _layout.tsx             # Root layout — font loading, theme provider
-│   ├── index.tsx               # Entry redirect (auth check → tabs or login)
-│   ├── (auth)/                 # Unauthenticated screens
-│   │   ├── phone.tsx
-│   │   ├── otp.tsx
-│   │   ├── email.tsx
-│   │   └── tier-info.tsx
-│   └── (tabs)/                 # Authenticated tab navigator
-│       ├── _layout.tsx
-│       ├── index.tsx           # Home / dashboard
-│       └── bookings.tsx        # Booking list (active + past tabs)
-├── components/
-│   ├── BookingCard.tsx         # Status-aware booking summary card
-│   ├── Button.tsx              # Themed primary button
-│   ├── Input.tsx               # Themed text input
-│   ├── TierBadge.tsx           # KYC tier indicator (Level 1/2/3)
-│   └── ThemeContext.tsx        # Light/dark theme provider
-├── lib/
-│   └── mockData.ts             # Mock bookings for UI development
-├── app.json                    # Expo config — name, slug, icons
-├── tsconfig.json
-└── .env.example
-```
-
----
-
-## Key Dependencies
-
-| Package | Purpose |
-|---------|---------|
-| `expo-router` | File-based navigation (same pattern as Next.js) |
-| `expo-location` | GPS for live tracking (driver position on map) |
-| `react-native-maps` | Map rendering for shipment tracking screen |
-| `zustand` | Lightweight global state (auth token, active booking) |
-| `axios` | HTTP client for backend API calls |
-| `@expo-google-fonts/space-grotesk` | Brand typography |
-
----
-
-## Booking Status Reference
-
-| Status | Meaning |
-|--------|---------|
-| `pending` | Booking created, awaiting driver acceptance |
-| `confirmed` | Driver assigned, payment escrowed |
-| `in_transit` | Driver confirmed pickup via OTP |
-| `delivered` | ePOD submitted, payment released |
-| `cancelled` | Cancelled by shipper |
-
----
-
-## Development Notes
-
-- The app currently uses `lib/mockData.ts` for booking list UI — real API calls will replace this when bt-booking-service JWT auth is wired (Sprint 3).
-- Theme (light/dark) is managed via `ThemeContext` — all components read from `theme.*` tokens rather than hardcoded colors.
-- Navigation uses Expo Router's file-based routing; `(auth)` and `(tabs)` are route groups (parentheses = no URL segment).
-- The driver tracking tab will use `expo-location` + WebSocket to bt-booking-service for real-time position updates.
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
