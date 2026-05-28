@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# bt-shipper-app
+
+Shipper-facing web dashboard for **BharatTruck** — an Indian B2B freight booking platform.
+
+Built with **Next.js 16**, **React 19**, **TypeScript 5**, and **Tailwind CSS 4**.
+
+## Features
+
+- **Multi-method authentication** — Phone OTP, email/password, Google OAuth, magic link
+- **Booking management** — Create bookings (direct or auction), track status through full lifecycle
+- **Quote negotiation** — View driver quotes, counter-offer, accept/reject with full history
+- **Payment tracking** — Mark bookings as paid, view payment status
+- **Live driver tracking** — Real-time GPS location on active bookings
+- **Session persistence** — Automatic token refresh on expiry, no unnecessary logouts
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Create a `.env.local` file:
 
-## Learn More
+```env
+NEXT_PUBLIC_API_URL=http://localhost:8080
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id
+```
 
-To learn more about Next.js, take a look at the following resources:
+`NEXT_PUBLIC_API_URL` points to the [bt-gateway](https://github.com/deltaos1997/bt-gateway) reverse proxy, which routes requests to the appropriate backend microservice.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+├── app/
+│   ├── auth/callback/     # OAuth callback handler
+│   ├── bookings/
+│   │   ├── [id]/          # Booking detail + negotiation
+│   │   └── new/           # Create new booking
+│   ├── dashboard/         # Main dashboard
+│   └── login/             # Multi-method auth
+├── components/
+│   ├── CounterModal.tsx   # Quote counter-offer modal
+│   ├── Navbar.tsx         # Top navigation
+│   ├── NegotiationHistory.tsx
+│   └── Spinner.tsx
+└── lib/
+    ├── api.ts             # API client with token refresh
+    ├── auth.tsx           # Auth context provider
+    ├── status.ts          # Booking status helpers
+    ├── types.ts           # TypeScript types
+    └── utils.ts           # Shared utilities
+```
 
-## Deploy on Vercel
+## Related Services
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+| Service | Repo | Purpose |
+|---------|------|---------|
+| API Gateway | [bt-gateway](https://github.com/deltaos1997/bt-gateway) | Nginx reverse proxy |
+| Auth | [bt-auth-service](https://github.com/deltaos1997/bt-auth-service) | OTP, JWT, Google OAuth |
+| Bookings | [bt-booking-service](https://github.com/deltaos1997/bt-booking-service) | Booking lifecycle, GPS |
+| Pricing | [bt-pricing-service](https://github.com/deltaos1997/bt-pricing-service) | Fare engine |
+| Payments | [bt-payment-service](https://github.com/deltaos1997/bt-payment-service) | Razorpay escrow |
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Deployment
+
+Deployed on **Vercel**. Push to `main` to trigger a production deploy.
