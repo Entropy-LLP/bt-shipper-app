@@ -5,13 +5,13 @@
 
 **Role:** The demand side — an SME posts point-to-point FTL/LTL loads, runs auctions or direct contracts, negotiates, pays, and **watches the truck live on a map**. Promise = transparency & trust.
 
-**Status legend:** ✅ done · 🟡 partial · ⬜ to do · ⛔ broken
+**Status legend:** ✅ done · 🟡 partial · ⬜ to do · ⛔ broken · `(Wx-y)`/`(D-z)` tags = Entropy PMO work-item refs (auto-synced to the tracker — keep them on the line when you flip a checkbox)
 
 ---
 
 ## ✅ What's done
 - ✅ Login (JWT access+refresh, refresh mutex, 401 retry), auth/callback (magic link).
-- ✅ Dashboard, new booking, booking detail with **negotiation UI** (`CounterModal`, `NegotiationHistory`).
+- ✅ Dashboard, new booking, booking detail with **negotiation UI** (`CounterModal`, `NegotiationHistory`). (D-10)
 - ✅ Auction (open, optional deadline) vs Direct (target driver UUID) creation; accept/counter/reject with persisted history.
 - ✅ Lifecycle states wired in UI: `pending → negotiating → accepted → in_transit → completed → paid` (+ cancelled).
 
@@ -21,13 +21,13 @@
 - 🟡 New Booking requires hand-typed **raw lat/lng** + pasting a **driver UUID** (no geocoding/driver picker).
 
 ## ⬜ To do (MVP / P0)
-- ⬜ **Fix the build:** create `@/lib/maps` + `<LiveTrackMap>` (from bt-tracking-service work) so booking-detail/tracking render.
-- ⬜ **Live tracking map:** moving truck marker + route polyline + ETA + **>1hr halt** indicator (reads tracking endpoints).
-- ⬜ **Real payments:** replace "Mark as Paid" with escrow/direct/cash via bt-payment-service.
-- ⬜ **Geocoding/address autocomplete** for pickup/drop + a **driver picker** for direct contracts (replace raw lat/lng + UUID paste).
-- ⬜ Show **driver/fleet identity** on quotes (Verified badge, trips-completed, vehicle) — currently only an 8-char id prefix.
-- ⬜ Full **load form** fields (material type, weight basis, truck type, pickup schedule, auction end, e-way bill optional) + saved/secure per-user data (addresses, templates).
-- ⬜ Dashboard: poll `negotiating/accepted` states (counters currently don't appear without reload); filter/sort/search.
+- ⬜ **Fix the build:** create `@/lib/maps` + `<LiveTrackMap>` (from bt-tracking-service work) so booking-detail/tracking render. (W1-1)
+- ⬜ **Live tracking map:** moving truck marker + route polyline + ETA + **>1hr halt** indicator (reads tracking endpoints). (W5-4)
+- ⬜ **Real payments:** replace "Mark as Paid" with escrow/direct/cash via bt-payment-service. (W6-14)
+- ⬜ **Geocoding/address autocomplete** for pickup/drop + a **driver picker** for direct contracts (replace raw lat/lng + UUID paste). (W3-8)
+- ⬜ Show **driver/fleet identity** on quotes (Verified badge, trips-completed, vehicle) — currently only an 8-char id prefix. (W3-10)
+- ⬜ Full **load form** fields (material type, weight basis, truck type, pickup schedule, auction end, e-way bill optional) + saved/secure per-user data (addresses, templates). (W3-9)
+- ⬜ Dashboard: poll `negotiating/accepted` states (counters currently don't appear without reload); filter/sort/search. (W3-11)
 - ⬜ Receiver-OTP delivery confirmation surfacing; trip timeline.
 
 ## ⬜ To do (P1)
